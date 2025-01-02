@@ -21,7 +21,7 @@ def aggiungi_nuotatore():
     nome = input("Inserisci il nome del nuotatore: ")
     eta = input("Inserisci l'età del nuotatore: ")
     nuotatori.append(Nuotatore(id, nome, eta))
-    print("Nuotatore aggiunto con successo.")
+    print("Nuotatore aggiunto.")
 
 def modifica_nuotatore():
     id = input("Inserisci l'ID del nuotatore da modificare: ")
@@ -29,7 +29,7 @@ def modifica_nuotatore():
         if nuotatore.id == id:
             nuotatore.nome = input("Inserisci il nuovo nome del nuotatore: ")
             nuotatore.eta = input("Inserisci la nuova età del nuotatore: ")
-            print("Nuotatore modificato con successo.")
+            print("Nuotatore modificato.")
             return
     print("Nuotatore non trovato.")
 
@@ -38,7 +38,7 @@ def elimina_nuotatore():
     for nuotatore in nuotatori:
         if nuotatore.id == id:
             nuotatori.remove(nuotatore)
-            print("Nuotatore eliminato con successo.")
+            print("Nuotatore eliminato.")
             return
     print("Nuotatore non trovato.")
 
@@ -46,9 +46,9 @@ def registra_allenamento():
     id = input("Inserisci l'ID dell'allenamento: ")
     nuotatore_id = input("Inserisci l'ID del nuotatore: ")
     data = input("Inserisci la data dell'allenamento (YYYY-MM-DD): ")
-    durata = input("Inserisci la durata dell'allenamento (minuti): ")
+    durata = input("Inserisci la durata dell'allenamento in minuti: ")
     allenamenti.append(Allenamento(id, nuotatore_id, data, durata))
-    print("Allenamento registrato con successo.")
+    print("Allenamento registrato.")
 
 
 def menu():
