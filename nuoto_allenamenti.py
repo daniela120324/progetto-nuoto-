@@ -1,3 +1,5 @@
+import mysql.connector
+
 class Nuotatore:
     def __init__(self, id, nome, eta):
         self.id = id
