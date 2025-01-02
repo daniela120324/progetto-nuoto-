@@ -7,10 +7,10 @@ class Nuotatore:
         self.eta = eta
 
 class Allenamento:
-    def __init__(self, id, nuotatore_id, data, durata):
+    def __init__(self, id, nuotatore_id, data_allenamento, durata):
         self.id = id
         self.nuotatore_id = nuotatore_id
-        self.data = data
+        self.data_allenamento = data_allenamento
         self.durata = durata
 
 # Connessione al database
@@ -32,55 +32,52 @@ def aggiungi_nuotatore():
     id = input("Inserisci l'ID del nuotatore: ")
     nome = input("Inserisci il nome del nuotatore: ")
     eta = input("Inserisci l'età del nuotatore: ")
-    nuotatori.append(Nuotatore(id, nome, eta))
+    cursor.execute("INSERT INTO nuotatori (id, nome, eta) VALUES (%s, %s, %s)", (id, nome, eta))
+    mydb.commit()
     print("Nuotatore aggiunto.")
 
 def modifica_nuotatore():
     id = input("Inserisci l'ID del nuotatore da modificare: ")
-    for nuotatore in nuotatori:
-        if nuotatore.id == id:
-            nuotatore.nome = input("Inserisci il nuovo nome del nuotatore: ")
-            nuotatore.eta = input("Inserisci la nuova età del nuotatore: ")
-            print("Nuotatore modificato.")
-            return
-    print("Nuotatore non trovato.")
+    nome = input("Inserisci il nuovo nome del nuotatore: ")
+    eta = input("Inserisci la nuova età del nuotatore: ")
+    cursor.execute("UPDATE nuotatori SET nome = %s, eta = %s WHERE id = %s", (nome, eta, id))
+    mydb.commit()
+    print("Nuotatore modificato.")
+
 
 def elimina_nuotatore():
     id = input("Inserisci l'ID del nuotatore da eliminare: ")
-    for nuotatore in nuotatori:
-        if nuotatore.id == id:
-            nuotatori.remove(nuotatore)
-            print("Nuotatore eliminato.")
-            return
-    print("Nuotatore non trovato.")
+    cursor.execute("DELETE FROM nuotatori WHERE id = %s", (id,))
+    mydb.commit()
+    print("Nuotatore eliminato.")
 
 def registra_allenamento():
     id = input("Inserisci l'ID dell'allenamento: ")
     nuotatore_id = input("Inserisci l'ID del nuotatore: ")
-    data = input("Inserisci la data dell'allenamento: ")
+    data_allenamento = input("Inserisci la data dell'allenamento: ")
     durata = input("Inserisci la durata dell'allenamento in minuti: ")
-    allenamenti.append(Allenamento(id, nuotatore_id, data, durata))
+    cursor.execute("INSERT INTO allenamenti (id, nuotatore_id, data_allenamento, durata) VALUES (%s, %s, %s, %s)", (id, nuotatore_id, data_allenamento, durata))
+    mydb.commit()
     print("Allenamento registrato.")
 
 def elimina_allenamento():
     id = input("Inserisci l'ID dell'allenamento da eliminare: ")
-    for allenamento in allenamenti:
-        if allenamento.id == id:
-            allenamenti.remove(allenamento)
-            print("Allenamento eliminato.")
-            return
-    print("Allenamento non trovato.")
+    cursor.execute("DELETE FROM allenamenti WHERE id = %s", (id,))
+    mydb.commit()
+    print("Allenamento eliminato.")
+
 
 def visualizza_nuotatori():
     print("LISTA NUOTATORI")
-    for nuotatore in nuotatori:
-        print(f"ID: {nuotatore.id}, Nome: {nuotatore.nome}, Età: {nuotatore.eta}")
+    cursor.execute("SELECT * FROM nuotatori")
+    for (id, nome, eta) in cursor.fetchall():
+        print(f"ID: {id}, Nome: {nome}, Età: {eta}")
 
 def visualizza_allenamenti():
     print("LISTA ALLENAMENTI")
-    for allenamento in allenamenti:
-        print(f"ID: {allenamento.id}, Nuotatore ID: {allenamento.nuotatore_id}, Data: {allenamento.data}, Durata: {allenamento.durata} minuti")
-
+    cursor.execute("SELECT * FROM allenamenti")
+    for (id, nuotatore_id, data_allenamento, durata) in cursor.fetchall():
+        print(f"ID: {id}, Nuotatore ID: {nuotatore_id}, Data: {data_allenamento}, Durata: {durata} minuti")
 
 
 def menu():
@@ -122,4 +119,9 @@ def menu():
 
 
 menu()
+
+# Chiusura connessione al database
+cursor.close()
+mydb.close()
+
 
