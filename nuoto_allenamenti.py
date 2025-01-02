@@ -42,12 +42,24 @@ def elimina_nuotatore():
             return
     print("Nuotatore non trovato.")
 
+def registra_allenamento():
+    id = input("Inserisci l'ID dell'allenamento: ")
+    nuotatore_id = input("Inserisci l'ID del nuotatore: ")
+    data = input("Inserisci la data dell'allenamento (YYYY-MM-DD): ")
+    durata = input("Inserisci la durata dell'allenamento (minuti): ")
+    allenamenti.append(Allenamento(id, nuotatore_id, data, durata))
+    print("Allenamento registrato con successo.")
+
+
 def menu():
     while True:
         print("Menu")
         print("1. Aggiungi Nuotatore")
         print("2. Modifica Nuotatore")
         print("3. Elimina Nuotatore")
+        print("4. Registra Allenamento")
+        print("5. Esci")
+
 
         scelta = input("Scegli un'opzione: ")
 
@@ -57,6 +69,12 @@ def menu():
             modifica_nuotatore()
         elif scelta == '3':
             elimina_nuotatore()
+        elif scelta == '4':
+            registra_allenamento()
+        elif scelta == '5':
+            print("Uscita dal programma.")
+            break
+
         else:
             print("Opzione non valida.")
 
