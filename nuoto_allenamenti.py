@@ -13,6 +13,16 @@ class Allenamento:
         self.data = data
         self.durata = durata
 
+# Connessione al database
+mydb = mysql.connector.connect(
+    host="localhost",
+    user="root",
+    password="root",
+    database="progetto_nuoto"
+)
+cursor = mydb.cursor()
+
+
 nuotatori = []
 allenamenti = []
 
