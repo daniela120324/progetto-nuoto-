@@ -60,6 +60,15 @@ def registra_allenamento():
     mydb.commit()
     print("Allenamento registrato.")
 
+def modifica_allenamento():
+    id = input("Inserisci l'ID dell'allenamento da modificare: ")
+    nuotatore_id = input("Inserisci il nuovo ID del nuotatore: ")
+    data_allenamento = input("Inserisci la nuova data dell'allenamento: ")
+    durata = input("Inserisci la nuova durata dell'allenamento in minuti: ")
+    cursor.execute("UPDATE allenamenti SET nuotatore_id = %s, data_allenamento = %s, durata = %s WHERE id = %s", (nuotatore_id, data_allenamento, durata, id))
+    mydb.commit()
+    print("Allenamento modificato.")
+
 def elimina_allenamento():
     id = input("Inserisci l'ID dell'allenamento da eliminare: ")
     cursor.execute("DELETE FROM allenamenti WHERE id = %s", (id,))
@@ -87,10 +96,11 @@ def menu():
         print("2. Modifica Nuotatore")
         print("3. Elimina Nuotatore")
         print("4. Registra Allenamento")
-        print("5. Elimina Allenamento")
-        print("6. Visualizza Tutti i Nuotatori")
-        print("7. Visualizza Tutti gli Allenamenti")
-        print("8. Esci")
+        print("5. Modifica Allenamento")
+        print("6. Elimina Allenamento")
+        print("7. Visualizza Tutti i Nuotatori")
+        print("8. Visualizza Tutti gli Allenamenti")
+        print("9. Esci")
 
 
 
@@ -105,12 +115,14 @@ def menu():
         elif scelta == '4':
             registra_allenamento()
         elif scelta == '5':
-            elimina_allenamento()
+            modifica_allenamento()
         elif scelta == '6':
-            visualizza_nuotatori()
+            elimina_allenamento()
         elif scelta == '7':
-            visualizza_allenamenti()
+            visualizza_nuotatori()
         elif scelta == '8':
+            visualizza_allenamenti()
+        elif scelta == '9':
             print("Uscita dal portale.")
             break
         else:
